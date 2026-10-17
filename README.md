@@ -1,205 +1,244 @@
-# 🚀 TalentLens – NLP-Powered Advanced Automated Applicant Tracking System for Resume Analysis and Candidate Ranking.
+# TalentLens AI — NLP-Powered Applicant Tracking System
 
-## 📌 Overview
+**TalentLens AI** is a full-stack Applicant Tracking System (ATS) designed to streamline resume screening, skill extraction, candidate ranking, and recruitment workflows using Natural Language Processing (NLP).
 
-**TalentLens** is a full-stack, NLP-powered Applicant Tracking System (ATS) designed to automate resume screening, candidate ranking, and recruiter workflows. The system leverages advanced Natural Language Processing (NLP) techniques to analyze resumes beyond simple keyword matching, providing accurate, explainable, and scalable hiring insights.
+The platform helps recruiters analyze resumes, compare candidate profiles against job requirements, and generate structured screening insights through an interactive web interface.
 
----
+## 🚀 Live Demo
 
-## 🎯 Key Features
+- **Frontend:** https://talent-lens-opal.vercel.app/
+- **Backend API:** https://talentlens-api-oqw0.onrender.com
+- **API Documentation:** https://talentlens-api-oqw0.onrender.com/docs
 
-* 📄 Resume Parsing (PDF & DOCX)
-* 🧠 NLP-Based Skill Extraction (280+ skills + synonyms)
-* 🔍 Named Entity Recognition (NER) using spaCy
-* 📊 Multi-dimensional ATS Scoring System
-* 🤖 Automatic Job Role Detection (Top-3 predictions)
-* 📈 Interactive Analytics Dashboard
-* 📑 PDF Report Generation
-* 📧 Email Automation for Recruiters
-* ⚡ Manual + Advanced Screening Modes
+> Note: The backend may take some time to respond after a period of inactivity because it runs on Render's free instance.
 
----
+## ✨ Key Features
+
+- **Resume Parsing:** Extract text and information from PDF and DOCX resumes.
+- **Skill Extraction:** Identify technical skills using a skill dictionary, keywords, and synonyms.
+- **Named Entity Recognition:** Use spaCy to identify relevant entities in resume text.
+- **ATS Scoring:** Evaluate resumes using multiple job-relevant criteria.
+- **Automatic Role Detection:** Predict suitable job roles and display top role matches.
+- **Candidate Ranking:** Compare resumes against job descriptions and rank candidates.
+- **Advanced Screening:** Support automated screening workflows alongside manual screening.
+- **Analytics Dashboard:** Present screening results and candidate insights.
+- **PDF Reports:** Generate downloadable resume analysis reports.
+- **Email Automation:** Support recruiter email workflows when SMTP is configured.
 
 ## 🏗️ System Architecture
 
-### 🔹 3-Tier Architecture
+TalentLens follows a three-tier architecture.
 
-1. **Frontend (Presentation Layer)**
+| Layer | Technology | Responsibility |
+|---|---|---|
+| Presentation | React.js, Tailwind CSS, Axios | User interface, uploads, dashboards |
+| Application | FastAPI, Python, spaCy | Resume processing, scoring, API endpoints |
+| Data | MongoDB, Motor | Resume records, analysis results, application data |
+| Deployment | Vercel, Render | Frontend hosting and backend hosting |
 
-   * React.js (Vite)
-   * Handles UI, dashboards, file uploads
+## 🧰 Tech Stack
 
-2. **Backend (Application Layer)**
+**Frontend**
+- React.js
+- Tailwind CSS
+- Axios
+- JavaScript
 
-   * FastAPI (Python)
-   * Handles NLP processing, scoring, APIs
+**Backend**
+- Python
+- FastAPI
+- Uvicorn
+- Pydantic
 
-3. **Database (Data Layer)**
+**NLP and Processing**
+- spaCy
+- Regular expressions
+- PDF and DOCX text extraction
+- Keyword and synonym matching
+- TF-IDF and cosine similarity concepts
 
-   * MongoDB
-   * Stores resumes, analysis, job descriptions
+**Database and Deployment**
+- MongoDB
+- Motor asynchronous database driver
+- Git and GitHub
+- Render
+- Vercel
 
----
+## 🔄 How It Works
 
-## ⚙️ Tech Stack
+1. The user uploads a resume in PDF or DOCX format.
+2. The backend extracts text and relevant information.
+3. The NLP pipeline processes the text and identifies skills and entities.
+4. The system evaluates the candidate using the implemented scoring criteria.
+5. Advanced screening can identify suitable job roles and candidate matches.
+6. Analysis results are stored in MongoDB.
+7. The frontend displays the results and dashboard insights.
+8. Users can generate reports and use email functionality when configured.
 
-### 🔹 Frontend
+## 📊 ATS Scoring Model
 
-* React.js
-* Tailwind CSS
-* Axios
-* Recharts / Chart.js
+The project uses a weighted scoring model to evaluate candidate suitability.
 
-### 🔹 Backend
+| Criterion | Weight |
+|---|---:|
+| Skills | 45% |
+| Experience | 25% |
+| Education | 10% |
+| Job Title Match | 10% |
+| Keywords | 10% |
+| **Total** | **100%** |
 
-* FastAPI
-* Python 3.11+
-* Pydantic
-* Uvicorn
+The scoring formula is:
 
-### 🔹 NLP & Processing
+`ATS Score = (Skills × 0.45) + (Experience × 0.25) + (Education × 0.10) + (Title Match × 0.10) + (Keywords × 0.10)`
 
-* spaCy (NER)
-* Regex
-* TF-IDF concepts
-* Cosine Similarity
+Scores are screening indicators, not guarantees of candidate suitability. Actual hiring decisions should include human review.
 
-### 🔹 Database
+## ⚙️ Local Installation
 
-* MongoDB (Motor - async driver)
+### Prerequisites
 
-### 🔹 Deployment
+- Python 3.11 recommended
+- Node.js and npm
+- MongoDB Atlas account or a compatible MongoDB instance
+- Git
 
-* Backend: Render
-* Frontend: Vercel
-
----
-
-
-
-## 🔄 Workflow
-
-1. User uploads resume (PDF/DOCX)
-2. Backend extracts text
-3. NLP pipeline processes data:
-
-   * Contact extraction (regex)
-   * Skill extraction (keywords + synonyms)
-   * NER (spaCy)
-   * Semantic similarity
-4. ATS score is calculated
-5. Role detection (Advanced mode)
-6. Results stored in MongoDB
-7. Dashboard visualizes insights
-8. PDF report + email automation available
-
----
-
-## 🧠 NLP Pipeline Details
-
-* **Text Extraction** → PyPDF2 / python-docx
-* **Tokenization & Cleaning**
-* **Skill Extraction** → 280+ keyword dictionary
-* **Synonym Resolution** → JS → JavaScript
-* **NER** → spaCy (ORG, PRODUCT)
-* **Semantic Matching** → Cosine Similarity
-
----
-
-## 📊 ATS Scoring Algorithm
-
-| Parameter   | Weight |
-| ----------- | ------ |
-| Skills      | 45%    |
-| Experience  | 25%    |
-| Education   | 10%    |
-| Title Match | 10%    |
-| Keywords    | 10%    |
-
-### Formula:
-
-```
-ATS Score = (Skill × 0.45) + (Experience × 0.25) + (Education × 0.10) + (Title × 0.10) + (Keywords × 0.10)
-```
-
----
-
-## 🚀 Setup & Installation
-
-### 🔹 Backend Setup
+### 1. Clone the repository
 
 ```bash
-cd backend
-pip install -r requirements.txt
-uvicorn server:app --reload
+git clone https://github.com/MShriK17/-TalentLens.git
+cd -TalentLens
 ```
 
-### 🔹 Frontend Setup
+### 2. Set up the backend
+
+```bash
+python -m venv .venv
+```
+
+Activate the virtual environment.
+
+**Windows PowerShell:**
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Install the dependencies:
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+Configure the backend environment variables in `backend/.env` using the example file provided in the repository.
+
+At minimum, configure:
+
+```env
+MONGO_URL=your_mongodb_connection_uri
+DB_NAME=Resume_Main
+```
+
+Start the backend from the repository root:
+
+```bash
+python -m uvicorn server:app --app-dir backend --reload
+```
+
+Backend address: `http://localhost:8000`
+
+API documentation: `http://localhost:8000/docs`
+
+### 3. Set up the frontend
+
+Open a second terminal:
 
 ```bash
 cd frontend
 npm install
+```
+
+Create or configure the frontend `.env` file:
+
+```env
+REACT_APP_BACKEND_URL=http://localhost:8000
+```
+
+Start the frontend:
+
+```bash
 npm start
 ```
 
----
+Use the local address displayed by the frontend development server.
 
-## 🌐 Deployment Guide
+## 🌐 Deployment
 
-### 🔹 Backend (Render)
+### Backend — Render
 
-1. Push backend code to GitHub
-2. Create new Web Service on Render
-3. Set:
+1. Connect the GitHub repository to Render.
+2. Create a Python web service.
+3. Set the root directory to `backend`.
+4. Configure the build command:
 
-   * Build Command: `pip install -r requirements.txt`
-   * Start Command: `uvicorn server:app --host 0.0.0.0 --port $PORT`
-4. Add `MONGO_URL`, `DB_NAME`, and `CORS_ORIGINS` in Render. Add the `MAIL_*` variables if email delivery is required.
-5. Verify `/health` returns `{"status":"ok","database":"ok"}`.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
----
+5. Configure the start command:
 
-### 🔹 Frontend (Vercel)
+   ```bash
+   uvicorn server:app --host 0.0.0.0 --port $PORT
+   ```
 
-1. Import the repository in Vercel.
+6. Set `MONGO_URL` and `DB_NAME` in the Render environment settings.
+7. Configure `CORS_ORIGINS` with the deployed frontend origin.
+8. Configure the `MAIL_*` variables if email delivery is required.
+9. Verify the `/health` endpoint after deployment.
+
+### Frontend — Vercel
+
+1. Import the repository into Vercel.
 2. Set the root directory to `frontend`.
-3. Vercel will use `npm run build` and the included SPA rewrite.
-4. Add `REACT_APP_BACKEND_URL` with the deployed Render backend URL, without a trailing slash.
-5. Redeploy after setting the variable.
+3. Use the detected Create React App framework configuration.
+4. Set the environment variable:
 
----
+   ```env
+   REACT_APP_BACKEND_URL=https://talentlens-api-oqw0.onrender.com
+   ```
 
-## 🌏 Live Application : https://talent-lens-psi.vercel.app/
+5. Deploy the project and test frontend-to-backend communication.
 
-## 🔐 Environment Variables
+Redeploy after changing environment variables.
 
-Backend variables are documented in `backend/.env.example`; frontend variables are documented in `frontend/.env.example`. Never commit real credentials or `.env` files.
+## 🔐 Security
 
----
+- Never commit `.env` files, passwords, API keys, or database credentials.
+- Use environment variables for deployment secrets.
+- Restrict database access appropriately.
+- Configure CORS for trusted frontend origins.
+- Review candidate information responsibly and protect personal data.
 
-## 📈 Future Enhancements
+## 🔮 Future Enhancements
 
-* OCR for scanned resumes
-* Integration with job portals
-* AI-based resume improvement suggestions
-* Real-time collaboration for recruiters
+- OCR support for scanned resumes.
+- Integration with job portals.
+- AI-powered resume improvement suggestions.
+- Advanced semantic matching and explainability.
+- Recruiter collaboration features.
+- Improved evaluation and model benchmarking.
 
----
+## 👨‍💻 Author and Contributors
 
-## 👨‍💻 Contributors
+**Mahesh Khumkar** — AI & Data Science Engineering graduate and developer working on TalentLens.
 
-* Prasen Nimje
-* Mahesh Khumkar
-* Nishant Chaudhari
-
----
+This project originated as a collaborative project. Add the other contributors and describe their contributions where appropriate.
 
 ## 📬 Contact
 
-📧 [prasennimje100@gmail.com](mailto:prasennimje100@gmail.com)
-🔗 LinkedIn: https://www.linkedin.com/in/prasen-nimje
+- **GitHub:** https://github.com/MShriK17
+- **LinkedIn:** Add your LinkedIn profile URL.
 
 ---
 
-## ⭐ If you like this project, give it a star!
-
+If you find this project useful, consider giving the repository a ⭐ on GitHub.
