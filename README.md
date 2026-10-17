@@ -237,8 +237,7 @@ This project originated as a collaborative project. Add the other contributors a
 ## 📬 Contact
 
 - **GitHub:** https://github.com/MShriK17
-- **LinkedIn:** Add your LinkedIn profile URL.
-
+- **LinkedIn:** https://www.linkedin.com/in/mahesh-k23/
 ---
 
 If you find this project useful, consider giving the repository a ⭐ on GitHub.
