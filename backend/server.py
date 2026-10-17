@@ -46,10 +46,31 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
-mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017/resume_main")
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ.get("DB_NAME", "Resume_Main")]
+# MongoDB connection
+mongo_url = os.environ.get("MONGO_URL", "").strip()
+db_name = os.environ.get("DB_NAME", "Resume_Main").strip()
 
+if not mongo_url:
+    raise RuntimeError(
+        "MONGO_URL is missing. Configure it in backend/.env "
+        "for local development or Render Environment for deployment."
+    )
+
+if not mongo_url.startswith(("mongodb://", "mongodb+srv://")):
+    raise RuntimeError(
+        "MONGO_URL must start with mongodb:// or mongodb+srv://"
+    )
+
+if not db_name:
+    raise RuntimeError("DB_NAME must not be empty.")
+
+client = AsyncIOMotorClient(
+    mongo_url,
+    serverSelectionTimeoutMS=10000,
+    connectTimeoutMS=10000,
+)
+
+db = client[db_name]
 
 # Load spaCy model
 try:
@@ -3570,6 +3591,11 @@ async def startup_check():
         )
 
 app.include_router(api_router)
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+@app.get("/")
+async def root_status():
+    return {
+        "message": "TalentLens AI API is running",
+        "version": "1.0.0",
+        "docs": "/docs",
+        "health": "/health"
+    }
