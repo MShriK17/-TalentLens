@@ -2428,6 +2428,7 @@ async def health_check():
         await client.admin.command("ping")
         return {"status": "ok", "database": "ok"}
     except Exception:
+        logger.exception("MongoDB health check failed")
         raise HTTPException(status_code=503, detail="Database unavailable")
 
 
